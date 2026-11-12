@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projects | Mouli Grandhi</title>
+<meta name="description" content="Projects by Mouli Grandhi: a maskless lithography system, an NFC game console, robots, an animatronic rat costume, and an Enigma machine simulator.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="me" href="index.html">Mouli Grandhi</a>
+    <nav aria-label="Pages">
+      <a href="index.html">Home</a>
+      <a href="projects.html" aria-current="page">Projects</a>
+      <a href="index.html#experience">Experience</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section id="projects">
+    <div class="wrap">
+      <h1 class="page-title">Projects</h1>
+
+      <article class="project lead">
+        <div class="when">Fall 2026 to now<span>Senior capstone</span></div>
+        <div class="body">
+          <h3>Maskless lithography system</h3>
+          <p class="role">Team lead, four-person team, Penn State Harrisburg</p>
+          <p>We are building a machine that prints semiconductor patterns onto a wafer with projected light instead of a physical photomask. The target is 80 nm precision. The design is adapted from Carnegie Mellon Hacker Fab's open-source stepper.</p>
+          <ul class="points">
+            <li>Lead the team and serve as a primary technical contributor, working with three project advisors.</li>
+            <li>Manage the $5,000 budget.</li>
+            <li>Track the work with an Agile process.</li>
+          </ul>
+          <figure class="path">
+            <svg viewBox="0 0 700 170" role="img" aria-label="Diagram: a UV projector sends a pattern through reduction optics onto a wafer on a motorized stage">
+              <rect class="box" x="1" y="45" width="170" height="80" rx="6"/>
+              <text x="86" y="80" text-anchor="middle">UV projector</text>
+              <text class="sub" x="86" y="100" text-anchor="middle">draws the pattern</text>
+              <path class="ray" d="M171 85 H265"/>
+              <rect class="box" x="265" y="45" width="170" height="80" rx="6"/>
+              <text x="350" y="80" text-anchor="middle">Reduction optics</text>
+              <text class="sub" x="350" y="100" text-anchor="middle">shrink it down</text>
+              <path class="cone" d="M435 55 L560 85 L435 115 Z"/>
+              <path class="ray" d="M435 85 H560"/>
+              <ellipse class="wafer" cx="610" cy="85" rx="50" ry="50"/>
+              <text x="610" y="82" text-anchor="middle">Wafer</text>
+              <text class="sub" x="610" y="100" text-anchor="middle">on a stage</text>
+            </svg>
+            <figcaption>How maskless lithography works, simplified.</figcaption>
+          </figure>
+          <ul class="tools" aria-label="Skills used">
+            <li>Photolithography</li><li>Optics</li><li>Motion control</li><li>Team leadership</li><li>Budgeting</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="when">November 2026<span>YCP Hacks</span></div>
+        <div class="body">
+          <h3>KeepSake retro game console</h3>
+          <p class="role">Hackathon team project</p>
+          <p>A game console on a Raspberry Pi where every cartridge is an NFC tag. The tag stores which game to launch and that game's save data, so your saves travel with the cartridge to any other console. It shipped with eight games.</p>
+          <ul class="tools" aria-label="Built with">
+            <li>Raspberry Pi 5</li><li>RC522 NFC reader</li><li>SPI display</li><li>Python</li><li>pygame</li>
+          </ul>
+          <p class="more"><a href="https://github.com/dannywatts/ycphacks-2026">KeepSake code on GitHub</a></p>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="when">October 2025<span>Personal</span></div>
+        <div class="body">
+          <h3>Animatronic rat costume</h3>
+          <p class="role">Designed, printed, wired, and programmed</p>
+          <p>A wearable 3D-printed rat for Halloween that sits on my head, worn with a chef's coat, and moves on its own. Two servo arms each pick a new random angle every 800 ms, so the motion never loops, and two LEDs light the eyes. The code is non-blocking, timed with <code>millis()</code> instead of <code>delay()</code>.</p>
+          <div class="shots two">
+            <figure><img src="assets/remy-costume.jpg" alt="The costume being worn: the printed rat sits on top of the head with its LED eyes lit" width="800" height="1067"></figure>
+            <figure><img src="assets/remy-closeup.jpg" alt="Close-up of the gray 3D-printed rat body with LED eyes, next to a breadboard" width="563" height="1000"></figure>
+          </div>
+          <ul class="tools" aria-label="Built with">
+            <li>Arduino Mega</li><li>Servos</li><li>C++</li><li>Bambu Lab A1 mini</li><li>3D modeling</li>
+          </ul>
+          <p class="more"><a href="https://github.com/Mouli-Grandhi/remy-rat-costume">Costume code, wiring, and print files on GitHub</a></p>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="when">Fall 2025<span>CMPEH 472</span></div>
+        <div class="body">
+          <h3>Infrared remote-control robot</h3>
+          <p class="role">Final project, built with Michael Zimmerman</p>
+          <p>A two-wheel robot on a Raspberry Pi Pico W running MicroPython. An infrared remote steers it, yellow LEDs blink as turn signals, red LEDs flash in reverse, and an ultrasonic sensor stops it 10 cm short of an obstacle until you back up.</p>
+          <p>The motors could not turn reliably across most of the PWM range, so variable speed was out. We used PWM to balance the two motors instead, which made the robot drive straight.</p>
+          <ul class="tools" aria-label="Built with">
+            <li>Raspberry Pi Pico W</li><li>MicroPython</li><li>NEC infrared</li><li>HC-SR04</li><li>PWM motor control</li>
+          </ul>
+          <p class="more"><a href="https://github.com/Mouli-Grandhi/pico-ir-robot">Robot code and full report on GitHub</a></p>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="when">Ongoing<span>Personal</span></div>
+        <div class="body">
+          <h3>Enigma machine simulator</h3>
+          <p class="role">Solo project, two versions</p>
+          <p>A working copy of the WWII Enigma I cipher machine. Each letter passes through three rotors with the historical wirings, bounces off a reflector, and comes back through, and the rotors step before every key press. Feed the scrambled text back in from the same start position and the original message comes out.</p>
+          <div class="shots one">
+            <figure><img src="assets/enigma-demo.gif" alt="Screen recording of the app encoding a sentence into scrambled letters, then decoding it back" width="560" height="256">
+            <figcaption>The app version encoding a message, then decoding it.</figcaption></figure>
+          </div>
+          <ul class="tools" aria-label="Built with">
+            <li>Python</li><li>JavaScript</li><li>Code.org App Lab</li>
+          </ul>
+          <p class="more"><a href="https://github.com/Mouli-Grandhi/Enigma-Machine">Enigma code on GitHub</a></p>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="when">2022<span>High school</span></div>
+        <div class="body">
+          <h3>VEX Robotics competition robot</h3>
+          <p class="role">Spin Up season, Robotics 2 class</p>
+          <p>A robot that drives on omni-wheels, picks discs off the floor with a rubber-band intake, launches them with a weighted flywheel, spins the field rollers, and expands at the end of the match on linear rails. Classmates adopted a similar design after seeing it work.</p>
+          <div class="shots wide">
+            <figure><img src="assets/vex-roller.jpg" alt="The robot holding a yellow disc beside the red and blue field roller" width="1100" height="801"></figure>
+            <figure><img src="assets/vex-robot.jpg" alt="Front view of the robot's rubber-band intake pulling in a disc" width="491" height="508"></figure>
+          </div>
+          <ul class="tools" aria-label="Built with">
+            <li>VEX V5</li><li>Drivetrain design</li><li>Gear trains</li><li>Mechanical design</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="when">High school<span>Engineering design</span></div>
+        <div class="body">
+          <h3>Pinball mini-golf course</h3>
+          <p class="role">Team lead, team of four</p>
+          <p>Designed and fabricated a pinball-themed mini-golf hole, taking it from concept to a playable course.</p>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="when">Ongoing<span>Personal</span></div>
+        <div class="body">
+          <h3>3D printing and design</h3>
+          <p>I design parts in Fusion 360 and SolidWorks and print them at home, both to fix real problems around the house and for several paid commercial jobs.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Mouli Grandhi, York, Pennsylvania. <a href="https://www.linkedin.com/in/mouli-grandhi/">LinkedIn</a> · <a href="https://github.com/Mouli-Grandhi">GitHub</a> · <a href="contact.html">Contact</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
