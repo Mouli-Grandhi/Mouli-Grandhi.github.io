@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maskless lithography system | Mouli Grandhi</title>
+<meta name="description" content="A senior capstone project at Penn State Harrisburg: a low-cost maskless photolithography stepper for making semiconductor devices, based on the open-source design from Carnegie Mellon's Hacker Fab.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="me" href="index.html">Mouli Grandhi</a>
+    <nav aria-label="Pages">
+      <a href="index.html">Home</a>
+      <a href="projects.html" aria-current="page">Projects</a>
+      <a href="index.html#experience">Experience</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section>
+    <div class="wrap doc">
+      <p class="crumb"><a href="projects.html">All projects</a></p>
+      <h1 class="page-title">Maskless lithography system</h1>
+      <p class="role">Senior capstone, fall 2026 to now. Team lead of a four-person team at Penn State Harrisburg.</p>
+      <p class="lede">We are building a machine that prints the patterns for semiconductor devices onto a silicon chip, using a video projector in place of a photomask.</p>
+
+      <dl class="stats">
+        <div><dt>2 µm</dt><dd>smallest feature the reference design has printed</dd></div>
+        <div><dt>5 µm</dt><dd>transistor gate length we are aiming to make</dd></div>
+        <div><dt>410 nm</dt><dd>near-UV light that exposes the photoresist</dd></div>
+        <div><dt>About $3,200</dt><dd>parts cost when I priced the full bill of materials</dd></div>
+      </dl>
+
+      <h2>Why build one</h2>
+      <p>Lithography is the step that sets how small a transistor can be. A chip is coated with a light-sensitive film called photoresist, an image of the circuit is projected onto it, and the exposed resist washes away to leave the pattern. A simple chip repeats this 10 to 30 times.</p>
+      <p>The machines that do it in industry cost between $5 million and $400 million, fill a room, and need a team of specialists to run. That puts hands-on chip fabrication out of reach for most universities. Our goal is a tool that costs a few thousand dollars and can make transistors large enough to inspect and small enough to teach with.</p>
+
+      <h2>Inspired by Carnegie Mellon's Hacker Fab</h2>
+      <p>This project starts from someone else's good idea. The <a href="https://hackerfab.ece.cmu.edu">Hacker Fab at Carnegie Mellon University</a> designed an open-source maskless lithography stepper, built it from about $3,000 of off-the-shelf parts, and used it to print features as small as 2 µm and to make working transistors. They published the design in a <a href="https://arxiv.org/abs/2510.15082">paper</a>, along with <a href="https://docs.hackerfab.org">build documentation</a> and the <a href="https://github.com/hacker-fab/stepper">control software</a>.</p>
+      <p>Our plan is to replicate their stepper at Penn State Harrisburg and improve it where we can. Their core idea is the one we are keeping: a DLP projector acts as a mask that can be redrawn in software, so changing the circuit means changing an image file, not ordering a new glass mask.</p>
+      <p>In October 2026 I visited the Hacker Fab lab in person, and the CMU team has stayed in touch by email since. The visit changed how we think about the build:</p>
+      <ul class="points">
+        <li><b>No cleanroom and no optical table.</b> Their tool sits in an ordinary lab room. An enclosure mostly blocks drafts, which supports our plan to use a small clean box.</li>
+        <li><b>One rigid frame matters most.</b> The stage, projector, and camera have to sit on a single stiff structure so that vibration moves them together.</li>
+        <li><b>Position feedback beats counting steps.</b> Their newer stage reads its position with magnetic encoders, which should align layers better than an open-loop stage.</li>
+        <li><b>Skip the vacuum spin coater.</b> Theirs pulled resist into the vacuum line and gummed it up, so they now tape the chip to a spinning platform.</li>
+      </ul>
+      <p>They also suggested where a second team could add something new: trying other photoresists and UV wavelengths, finding a replacement for the projector, which is often out of stock, and finishing the software that aligns multiple layers.</p>
+
+      <h2>How it works</h2>
+      <p>The projector's blue LED is swapped for a 410 nm near-UV LED. The 1920 by 1080 image leaves the projector, passes through a beamsplitter, and is shrunk by a 10x microscope objective onto the chip. Each exposure covers a field about 1 mm wide and takes around 8 seconds in the reference design. To pattern a larger area, the stage steps the chip and exposes the next field beside the first.</p>
+      <p>A camera looks back through the same objective, so the operator sees exactly what the projector sees. The pattern can be shown in red light first. Red does not expose the resist, so it is safe to focus and line things up before switching to UV.</p>
+      <p>The lens sets a hard limit on feature size. With the Rayleigh criterion:</p>
+      <p class="math">R = 0.61 × λ / NA = 0.61 × 0.410 µm / 0.25 ≈ 1.0 µm</p>
+      <p>So about 1 µm is the theoretical best for this lens and wavelength, and the 2 µm that CMU reached in practice is close to it. The same numbers give a depth of focus of only about ±3.3 µm, which is why focusing has to be automated.</p>
+
+      <h2>System design</h2>
+      <p>I wrote most of our functional decomposition, which breaks the machine into five subsystems. It takes in wall power, commands from the user, and a resist-coated chip, and it returns a patterned chip and a live camera view.</p>
+      <figure class="diagram">
+        <img src="assets/litho-level1.png" alt="Block diagram of the lithographer. Power Management feeds the Controllers, the Positioning System, and Projection and Optics. The user works through Controls and UI, which commands the Controllers and sends the pattern to Projection and Optics. The coated chip enters the Positioning System and leaves as a patterned chip." width="2050" height="1100">
+        <figcaption>Level 1: the five subsystems and how they connect.</figcaption>
+      </figure>
+      <ul class="points">
+        <li><b>Power management</b> turns 120 VAC wall power into 12 V, 5 V, and the projector's supply.</li>
+        <li><b>Controls and UI</b> is the software on the PC. It takes stage commands, sends the pattern to the projector over HDMI, and shows the camera feed.</li>
+        <li><b>Controllers</b> drive the stage motors and the vacuum pump, and read position error from the encoders over SPI.</li>
+        <li><b>Projection and optics</b> is the projector, the beamsplitter, the objective lens, and the camera.</li>
+        <li><b>Positioning system</b> is three stepper motors moving a delta stage, with magnetic encoders for feedback and a vacuum chuck that holds the chip flat.</li>
+      </ul>
+      <p>The software also has to do two jobs a person cannot do reliably by hand. Autofocus steps the stage up and down, coarse then fine, and keeps the height where the camera image is sharpest. Auto-alignment uses a neural network to find the alignment marks in the corners of the chip, then moves the stage to line them up with the next pattern.</p>
+      <figure class="diagram">
+        <img src="assets/litho-level2.png" alt="Detailed block diagram showing the parts inside each subsystem, such as the 12 V supply and buck converter, motor and vacuum control, stepper controller, delta stage, magnetic encoder, vacuum chuck, DLP projector, beamsplitter, objective lens, and camera, with the power and signal carried on each connection." width="2500" height="1400">
+        <figcaption>Level 2: the parts inside each subsystem and what each connection carries.</figcaption>
+      </figure>
+
+      <h2>Decisions so far</h2>
+      <ul class="points">
+        <li><b>A delta stage with encoder feedback.</b> I priced both of CMU's stage designs and the parts cost about the same, roughly $320 against $350. The newer delta stage takes more labor to build, but it has a theoretical step of about 79 nm and closed-loop feedback, so that is the one in our design.</li>
+        <li><b>A clean box, not a cleanroom.</b> A full cleanroom is out of reach on cost and space, and the CMU visit showed it is not needed.</li>
+        <li><b>No hydrofluoric acid, in any form.</b> After collecting the safety data for every chemical in CMU's process and meeting with our advisors, we ruled out HF completely. That takes etching out of scope and is the largest place our process departs from theirs.</li>
+        <li><b>Standards first.</b> I wrote the standards section of our proposal. Chemicals and UV exposure are the two most serious hazards, so they get the strictest rules, including an emergency stop that cuts both the UV light and stage motion.</li>
+      </ul>
+
+      <h2>My role</h2>
+      <ul class="points">
+        <li>Lead the four-person team and work with our three advisors.</li>
+        <li>Manage the budget and track tasks in Jira.</li>
+        <li>Did the literature review, covering both versions of the CMU paper and Chris Mack's <i>Fundamental Principles of Optical Lithography</i>.</li>
+        <li>Priced every line of the bill of materials and wrote the funding request for the stage parts.</li>
+        <li>Wrote the functional decomposition and the safety standards section.</li>
+      </ul>
+
+      <h2>Where it stands</h2>
+      <p>This semester is research and design, and the build comes next. The main open question is the projector: the model the design is built around is backordered, so we are weighing three alternatives, including the light engine from a resin 3D printer. The first milestone for the hardware is a clean, sharp pattern in photoresist. After that comes stitching fields together to cover larger areas.</p>
+
+      <h2>Credit and sources</h2>
+      <ul class="points">
+        <li>CMU Hacker Fab, "A low-cost, open-source maskless photolithography stepper," <a href="https://arxiv.org/abs/2510.15082">arXiv:2510.15082</a>.</li>
+        <li><a href="https://docs.hackerfab.org">Hacker Fab documentation</a> and the <a href="https://github.com/hacker-fab/stepper">stepper software</a>.</li>
+        <li>The open-source <a href="https://github.com/0x23/MicroManipulatorStepper">micromanipulator</a> that the delta stage is based on.</li>
+        <li>C. Mack, <i>Fundamental Principles of Optical Lithography</i>, Wiley, 2007.</li>
+      </ul>
+
+      <p class="next"><a href="projects.html">Back to all projects</a></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Mouli Grandhi, York, Pennsylvania. <a href="https://www.linkedin.com/in/mouli-grandhi/">LinkedIn</a> · <a href="https://github.com/Mouli-Grandhi">GitHub</a> · <a href="contact.html">Contact</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

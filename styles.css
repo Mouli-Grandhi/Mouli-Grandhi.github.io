@@ -170,3 +170,21 @@ footer p + p { margin-top: 1.5rem; color: var(--muted); font-size: .9rem; }
 .next { margin-top: 2.5rem; font-weight: 600; }
 footer p, footer p + p { margin: 0; color: var(--muted); font-size: .9rem; }
 main { min-height: 70vh; }
+
+/* ---------- project detail page ---------- */
+.btn { display: inline-block; padding: .6rem 1.15rem; border: 1.5px solid var(--uv); border-radius: 999px; background: var(--uv); color: var(--wafer); text-decoration: none; font-weight: 600; }
+.btn:hover { background: var(--ink); border-color: var(--ink); color: var(--wafer); }
+.crumb { margin-bottom: 1.25rem; font-weight: 600; }
+.crumb a::before { content: "\2190\00a0"; }
+.doc .page-title { margin-bottom: 1rem; max-width: 16ch; }
+.doc .role { margin: 0 0 1.5rem; }
+.doc h2 { margin: 3.25rem 0 1rem; font-size: clamp(1.5rem, 3vw, 2.1rem); line-height: 1.15; }
+.doc p + p, .doc .points + p { margin-top: 1rem; }
+.doc .points li { margin-top: .6rem; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: 1rem; margin: 2.25rem 0 0; }
+.stats div { padding: 1.1rem 1.25rem; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; }
+.stats dt { font: 700 1.6rem/1.1 var(--display); color: var(--uv); }
+.stats dd { margin: .4rem 0 0; color: var(--muted); font-size: .92rem; line-height: 1.4; }
+.math { padding: .8rem 1.1rem; background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--uv); border-radius: 6px; font-weight: 600; width: fit-content; max-width: 100%; overflow-x: auto; }
+.diagram { margin: 1.75rem 0; max-width: 52rem; }
+.diagram img { width: 100%; background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: .5rem; }
