@@ -7,7 +7,7 @@
 <meta name="description" content="A senior capstone project at Penn State Harrisburg: a low-cost maskless photolithography stepper for making semiconductor devices, based on the open-source design from Carnegie Mellon's Hacker Fab.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -83,7 +83,7 @@
 
       <h2>Decisions so far</h2>
       <ul class="points">
-        <li><b>A delta stage with encoder feedback.</b> I priced both of CMU's stage designs and the parts cost about the same, roughly $320 against $350. The newer delta stage takes more labor to build, but it has a theoretical step of about 79 nm and closed-loop feedback, so that is the one in our design.</li>
+        <li><b>A delta stage with encoder feedback.</b> I priced both of CMU's stage designs and the parts cost about the same, roughly $320 against $350. The newer delta stage takes more labor to build, but it has a theoretical smallest step of about 80 nm and closed-loop feedback, so that is the one in our design.</li>
         <li><b>A clean box, not a cleanroom.</b> A full cleanroom is out of reach on cost and space, and the CMU visit showed it is not needed.</li>
         <li><b>No hydrofluoric acid, in any form.</b> After collecting the safety data for every chemical in CMU's process and meeting with our advisors, we ruled out HF completely. That takes etching out of scope and is the largest place our process departs from theirs.</li>
         <li><b>Standards first.</b> I wrote the standards section of our proposal. Chemicals and UV exposure are the two most serious hazards, so they get the strictest rules, including an emergency stop that cuts both the UV light and stage motion.</li>

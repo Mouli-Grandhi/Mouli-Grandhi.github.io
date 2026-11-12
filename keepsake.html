@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KeepSake retro game console | Mouli Grandhi</title>
+<meta name="description" content="KeepSake is a Raspberry Pi game console built at YCP Hacks 2026 where every cartridge is an NFC tag that stores the game and its save data.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="me" href="index.html">Mouli Grandhi</a>
+    <nav aria-label="Pages">
+      <a href="index.html">Home</a>
+      <a href="projects.html" aria-current="page">Projects</a>
+      <a href="index.html#experience">Experience</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section>
+    <div class="wrap doc">
+      <p class="crumb"><a href="projects.html">All projects</a></p>
+      <h1 class="page-title">KeepSake retro game console</h1>
+      <p class="role">Hackathon team project, YCP Hacks, November 2026. I did the hardware and its integration.</p>
+      <p class="lede">A game console on a Raspberry Pi where every cartridge is an NFC tag. The tag stores which game to launch and that game's save data, so your saves travel with the cartridge to any other console.</p>
+
+      <dl class="stats">
+        <div><dt>8 games</dt><dd>shipped on the console</dd></div>
+        <div><dt>504 bytes</dt><dd>of memory on each cartridge</dd></div>
+        <div><dt>2 copies</dt><dd>of every save, so a bad write cannot wipe a cartridge</dd></div>
+        <div><dt>0.5 s</dt><dd>to notice a cartridge has been pulled</dd></div>
+      </dl>
+
+      <h2>How it works</h2>
+      <ol class="points">
+        <li>The console shows "Insert cartridge" and keeps checking the NFC reader.</li>
+        <li>When a tag appears, it reads a short header with the game ID, followed by that game's save data.</li>
+        <li>It launches the matching game in the same window.</li>
+        <li>Whenever the game's save changes, the console writes it back to the tag.</li>
+        <li>Choosing "Eject cartridge" from the pause menu finishes saving and shows a "safe to remove" screen. If ejecting would lose progress, the console asks first.</li>
+      </ol>
+      <p>Pulling the cartridge without ejecting is caught after two missed checks in a row. The game stops, and the last save on the tag is still there.</p>
+
+      <h2>What it is useful for</h2>
+      <ul class="points">
+        <li><b>Your save goes where you go.</b> The save lives on the cartridge, so you can take it to any other KeepSake console and pick up exactly where you left off. There is no account to create and nothing to log in to.</li>
+        <li><b>Sharing a console is safe.</b> Several people can play on the same console, each with their own cartridge, and nobody has to worry about someone else overwriting their save.</li>
+      </ul>
+      <p>A classic game cartridge, like the old Nintendo ones, does this too, because the save sits on the cartridge next to the game. The catch is that every player then needs their own copy of the game. With KeepSake the games stay on the console and the cartridge carries only the save, so one console covers everyone and each player just needs a tag.</p>
+
+      <h2>Hardware</h2>
+      <ul class="points">
+        <li><b>Raspberry Pi 5</b> runs the console and the games.</li>
+        <li><b>RC522 NFC reader</b> on the first SPI bus reads and writes the cartridges.</li>
+        <li><b>NTAG215 tags</b> are the cartridges. Each holds 504 bytes.</li>
+        <li><b>A small 1.8 inch screen</b> (ST7735S) on a second SPI bus shows the game that is currently playing, with its logo and name. It also shows what the console is doing: insert cartridge, loading, saving, and safe to remove, each with its own animation.</li>
+        <li><b>A gamepad or keyboard</b> for controls.</li>
+      </ul>
+
+      <h2>The games</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Game</th><th>What it is</th><th>Size on cartridge</th></tr></thead>
+          <tbody>
+            <tr><td>Circuit Runner</td><td>Maze chase with generated mazes</td><td>93 bytes</td></tr>
+            <tr><td>Hive Siege</td><td>Fixed shooter with destructible barriers</td><td>93 bytes</td></tr>
+            <tr><td>Debris Field</td><td>Rock shooter where the screen wraps around</td><td>97 bytes</td></tr>
+            <tr><td>Byte Buddy</td><td>Virtual pet that lives on the cartridge</td><td>58 bytes</td></tr>
+            <tr><td>Cargo Shuffle</td><td>Crate-pushing puzzles with a level editor</td><td>221 bytes</td></tr>
+            <tr><td>Tiny Acres</td><td>Farming sim</td><td>250 bytes</td></tr>
+            <tr><td>Element Shift</td><td>Elemental puzzle adventure</td><td>36 bytes</td></tr>
+            <tr><td>Pocket Farm</td><td>Farm builder with a draggable map</td><td>221 bytes</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Keeping the save on the cartridge changes what the games can do:</p>
+      <ul class="points">
+        <li>The three arcade games keep a top-10 high score table with initials on the cartridge.</li>
+        <li>Byte Buddy's pet keeps aging while the cartridge is out, and grows into a different adult depending on how well it was cared for.</li>
+        <li>Cargo Shuffle stores two custom levels, so players can swap cartridges to play each other's puzzles.</li>
+        <li>Crops in Pocket Farm keep growing while the cartridge is out.</li>
+      </ul>
+
+      <h2>The main issue: small cartridges</h2>
+      <p>The biggest constraint on the whole project was the size of the NFC tags I had on hand. Each one holds 504 bytes, about as much as a few sentences of plain text. That is all the room a game gets for its save, so every game had to be designed around a very small save.</p>
+      <p>It gets tighter in practice. Each cartridge keeps two copies of the save for safety, so one copy, including its header and checksum, has to fit in half the tag: 252 bytes. The largest game, Tiny Acres, uses 250 of them.</p>
+      <p>That limit shaped the games themselves:</p>
+      <ul class="points">
+        <li>High score tables stop at ten entries, each a score and a set of initials.</li>
+        <li>Cargo Shuffle went from four custom levels per cartridge down to two.</li>
+        <li>A Pocket Farm can hold 48 objects with a backup copy, or up to 111 if it gives up the backup.</li>
+        <li>Nothing that can be rebuilt is stored. Maps and artwork stay on the console, and only the player's progress goes on the tag.</li>
+      </ul>
+
+      <h2>Fitting a save into 504 bytes</h2>
+      <p>Every cartridge starts with a 15-byte header: a marker that identifies the tag as a cartridge, a format version, the game ID, the version and length of that game's save, and a write counter. The save data follows, and a CRC32 checksum closes it out.</p>
+      <p>Each game defines its own save layout and version, so one game's format can change without touching the others, and a game can convert older saves when it loads them.</p>
+      <p>The tightest squeeze was Pocket Farm. Its original save was a JSON file of about 10 KB. On the cartridge it becomes a 38-byte header plus 4 bytes for each object on the farm.</p>
+
+      <h2>Surviving a pulled cartridge</h2>
+      <p>Someone will always pull the cartridge in the middle of a save. To make that safe, each tag is split in half into two slots. A new save always goes to the slot that does not hold the newest copy, so an interrupted write can only damage the copy being written.</p>
+      <p>When a cartridge is read, both slots are checked, and the newest copy with a correct checksum wins. If one copy was damaged, the console says it recovered the backup. At worst the latest save is lost, never the whole cartridge.</p>
+      <p>A save-test mode makes this easy to try: it slows writes down to one 4-byte page every 0.1 seconds and shows the progress on screen, so you can pull the cartridge partway through and watch what loads.</p>
+
+      <h2>How the software is put together</h2>
+      <ul class="points">
+        <li><b>Python and pygame</b> for the console and the games. The console owns the window and the main loop, and calls the current game every frame.</li>
+        <li><b>C for the NFC reader.</b> The reader and tag drivers are in C, and the console calls them from Python through <code>ctypes</code>.</li>
+        <li><b>Background threads</b> where the hardware is slow. Checking for a tag can take about 250 ms, so it runs off the main thread, and the status display draws at 20 frames per second in its own thread so it never slows a game down.</li>
+        <li><b>Dev mode.</b> Without a reader attached, files stand in for cartridges, so the whole console runs on any computer.</li>
+        <li><b>One file per game.</b> A new game is a save layout and a class with three methods: reset, update, and draw.</li>
+        <li><b>Automated tests</b> cover the console and two of the games.</li>
+      </ul>
+
+      <h2>My role</h2>
+      <p>I was responsible for the hardware and its integration with the rest of the console. That meant getting the NFC reader and the small screen that shows the current game connected to the Raspberry Pi and working together with the console software the team was writing.</p>
+
+      <h2>What is left to do</h2>
+      <p>It was built in a weekend, and the project's README keeps an honest list of what is not finished:</p>
+      <ul class="points">
+        <li>The status display driver and the write to the second save slot have been tested against stand-ins, and still need a full check on the real hardware.</li>
+        <li>Normal saves are written on the main thread, so a game can pause briefly while it saves.</li>
+        <li>"Power off" closes the console program but does not shut down the Pi.</li>
+      </ul>
+
+      <p class="next"><a class="btn" href="https://github.com/dannywatts/ycphacks-2026">KeepSake code on GitHub</a></p>
+      <p class="next"><a href="projects.html">Back to all projects</a></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Mouli Grandhi, York, Pennsylvania. <a href="https://www.linkedin.com/in/mouli-grandhi/">LinkedIn</a> · <a href="https://github.com/Mouli-Grandhi">GitHub</a> · <a href="contact.html">Contact</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

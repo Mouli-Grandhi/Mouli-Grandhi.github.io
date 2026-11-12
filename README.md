@@ -5,6 +5,7 @@ Personal site for Mouli Grandhi.
 - `index.html`: home, with experience, education, and skills
 - `projects.html`: all projects
 - `lithography.html`: detail page for the capstone lithography project
+- `keepsake.html`: detail page for the KeepSake game console
 - `contact.html`: how to reach me
 - `styles.css`: shared styles for every page
 - `assets/`: images
