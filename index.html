@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mouli Grandhi | Electrical Engineer</title>
+<meta name="description" content="Projects and experience of Mouli Grandhi, electrical engineering senior at Penn State Harrisburg, graduating May 2027.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --wafer: #F2F3F8;      /* page */
+  --panel: #FFFFFF;
+  --ink: #17153A;        /* deep indigo text */
+  --muted: #5B5A78;
+  --line: #D6D8E6;
+  --uv: #5A3BD8;         /* 405 nm exposure light */
+  --safelight: #F2A900;  /* cleanroom amber */
+  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+  --measure: 62ch;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --wafer: #121027; --panel: #1B1838; --ink: #ECEBFA; --muted: #A9A7C6;
+    --line: #322E5C; --uv: #A692FF; --safelight: #F2A900;
+  }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--wafer); color: var(--ink);
+  font: 400 1.0625rem/1.6 var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; height: auto; display: block; }
+a { color: var(--uv); text-underline-offset: .18em; text-decoration-thickness: .08em; }
+a:hover { text-decoration-thickness: .16em; }
+:focus-visible { outline: 3px solid var(--safelight); outline-offset: 3px; border-radius: 2px; }
+.wrap { width: min(100% - 2.5rem, 68rem); margin-inline: auto; }
+
+/* ---------- top bar ---------- */
+.top { position: sticky; top: 0; z-index: 5; background: color-mix(in srgb, var(--wafer) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding-block: .7rem; }
+.top .me { font: 700 1.05rem var(--display); color: var(--ink); text-decoration: none; }
+.top nav { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+.top nav a { color: var(--ink); text-decoration: none; font-weight: 500; font-size: .95rem; }
+.top nav a:hover { color: var(--uv); }
+
+/* ---------- hero ---------- */
+.hero {
+  position: relative; overflow: hidden;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 4.5rem 4.5rem; background-position: -1px -1px;
+  border-bottom: 1px solid var(--line);
+}
+.hero .wrap { padding-block: clamp(3.5rem, 10vw, 7.5rem) clamp(2.5rem, 6vw, 4.5rem); }
+.name {
+  position: relative; margin: 0; width: fit-content;
+  font: 800 clamp(3.6rem, 17vw, 11rem)/.88 var(--display);
+  letter-spacing: -.035em; font-stretch: 85%;
+}
+.name .resist { color: transparent; -webkit-text-stroke: 1.5px var(--ink); display: block; }
+.name .developed {
+  position: absolute; inset: 0; color: var(--ink);
+  clip-path: inset(-10% 0 -10% 0);
+  animation: expose 1.5s cubic-bezier(.6,.05,.3,1) .25s backwards;
+}
+.name .beam {
+  position: absolute; top: -6%; bottom: -6%; left: 100%; width: .5rem; opacity: 0;
+  background: var(--uv); box-shadow: 0 0 2.5rem .6rem color-mix(in srgb, var(--uv) 55%, transparent);
+  animation: beam 1.5s cubic-bezier(.6,.05,.3,1) .25s backwards;
+}
+@keyframes expose { from { clip-path: inset(-10% 100% -10% 0); } }
+@keyframes beam { from { left: 0; opacity: 1; } 92% { opacity: 1; } to { left: 100%; opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .name .developed, .name .beam { animation: none; }
+  html { scroll-behavior: auto; }
+}
+.pitch { max-width: 44ch; margin: 2rem 0 0; font: 500 clamp(1.2rem, 2.4vw, 1.6rem)/1.35 var(--display); }
+.status { margin: 1rem 0 0; color: var(--muted); max-width: var(--measure); }
+.status b { color: var(--ink); font-weight: 600; background: linear-gradient(transparent 62%, color-mix(in srgb, var(--safelight) 60%, transparent) 62%); }
+.links { display: flex; flex-wrap: wrap; gap: .75rem; margin: 2rem 0 0; padding: 0; list-style: none; }
+.links a {
+  display: inline-block; padding: .65rem 1.1rem; border: 1.5px solid var(--ink); border-radius: 999px;
+  background: var(--panel); color: var(--ink); text-decoration: none; font-weight: 600;
+}
+.links a:hover { background: var(--ink); color: var(--wafer); }
+.links li:first-child a { background: var(--uv); border-color: var(--uv); color: #fff; }
+.links li:first-child a:hover { background: var(--ink); border-color: var(--ink); color: var(--wafer); }
+@media (prefers-color-scheme: dark) { .links li:first-child a { color: #121027; } }
+
+/* ---------- sections ---------- */
+section { padding-block: clamp(3rem, 7vw, 5.5rem); }
+section + section { border-top: 1px solid var(--line); }
+h2 { margin: 0 0 2.5rem; font: 700 clamp(2rem, 5vw, 3.25rem)/1 var(--display); letter-spacing: -.02em; }
+h3 { margin: 0; font: 700 clamp(1.4rem, 2.6vw, 1.9rem)/1.15 var(--display); letter-spacing: -.01em; }
+p { margin: 0; max-width: var(--measure); }
+
+/* ---------- projects ---------- */
+.project {
+  display: grid; grid-template-columns: 9.5rem minmax(0, 1fr); gap: 1.5rem 2.5rem;
+  padding-block: 2.75rem; border-top: 1px solid var(--line);
+}
+.project:first-of-type { border-top: 0; padding-top: 0; }
+.when { font: 600 1rem/1.3 var(--display); color: var(--muted); padding-top: .45rem; }
+.when span { display: block; font-weight: 400; font-size: .9rem; }
+.project .body, .job .body { min-width: 0; }
+.path { max-width: 100%; }
+.role { margin: .35rem 0 0; color: var(--muted); font-weight: 500; }
+.project .body > p + p, .project .body > h3 + p { margin-top: .9rem; }
+.project .body > .role + p { margin-top: 1rem; }
+.points { margin: 1rem 0 0; padding-left: 1.1rem; max-width: var(--measure); }
+.points li { margin-top: .4rem; }
+.points li::marker { color: var(--uv); }
+.tools { display: flex; flex-wrap: wrap; gap: .4rem; margin: 1.25rem 0 0; padding: 0; list-style: none; }
+.tools li { padding: .15rem .65rem; border: 1px solid var(--line); border-radius: 4px; background: var(--panel); font-size: .875rem; color: var(--muted); }
+.more { margin-top: 1.1rem; font-weight: 600; }
+.shots { display: grid; gap: .75rem; margin: 1.75rem 0 0; align-items: start; }
+.shots.two { grid-template-columns: 1fr 1fr; max-width: 34rem; }
+.shots.wide { grid-template-columns: 2fr 1fr; max-width: 46rem; }
+.shots.one { max-width: 35rem; }
+.shots img { border-radius: 6px; border: 1px solid var(--line); background: var(--panel); width: 100%; }
+figure { margin: 0; }
+figcaption { margin-top: .4rem; font-size: .875rem; color: var(--muted); }
+
+/* capstone gets the full treatment */
+.project.lead .body { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: clamp(1.25rem, 3vw, 2.25rem); }
+.project.lead h3 { font-size: clamp(1.7rem, 3.6vw, 2.6rem); }
+.path { margin-top: 2rem; }
+.path svg { width: 100%; max-width: 44rem; height: auto; display: block; }
+.path .box { fill: var(--wafer); stroke: var(--ink); stroke-width: 1.5; }
+.path text { font: 500 14px var(--body); fill: var(--ink); }
+.path .sub { font-size: 12px; fill: var(--muted); font-weight: 400; }
+.path .ray { stroke: var(--uv); stroke-width: 3; fill: none; }
+.path .cone { fill: var(--uv); opacity: .22; }
+.path .wafer { fill: var(--safelight); stroke: var(--ink); stroke-width: 1.5; }
+
+/* ---------- experience ---------- */
+.job { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr); gap: 1.5rem 2.5rem; padding-block: 2rem; border-top: 1px solid var(--line); }
+.job:first-of-type { border-top: 0; padding-top: 0; }
+
+/* ---------- about ---------- */
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 2.5rem; margin: 0; }
+.facts h3 { font-size: 1.25rem; margin-bottom: .75rem; }
+.facts ul { margin: 0; padding: 0; list-style: none; }
+.facts li { padding: .35rem 0; border-bottom: 1px solid var(--line); }
+.facts li:last-child { border-bottom: 0; }
+.facts small { display: block; color: var(--muted); font-size: .9rem; }
+
+footer { border-top: 1px solid var(--line); padding-block: 2.5rem 3.5rem; }
+footer h2 { margin-bottom: 1rem; }
+footer p + p { margin-top: 1.5rem; color: var(--muted); font-size: .9rem; }
+
+@media (max-width: 44rem) {
+  .project, .job { grid-template-columns: 1fr; gap: .5rem; }
+  .when { padding-top: 0; }
+  .when span { display: inline; }
+  .when span::before { content: ", "; }
+  .top .me { display: none; }
+  .top nav { gap: 1.1rem; }
+  .path { overflow-x: auto; }
+  .path svg { min-width: 32rem; }
+  .shots.wide { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="me" href="#top">Mouli Grandhi</a>
+    <nav aria-label="Sections">
+      <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <h1 class="name" aria-label="Mouli Grandhi">
+        <span class="resist" aria-hidden="true">Mouli<br>Grandhi</span>
+        <span class="developed" aria-hidden="true">Mouli<br>Grandhi</span>
+        <span class="beam" aria-hidden="true"></span>
+      </h1>
+      <p class="pitch">Electrical engineer who builds things: a chip lithography machine, robots, an animatronic rat, and a cipher machine.</p>
+      <p class="status">Senior in electrical engineering at Penn State Harrisburg and president of its IEEE student branch. <b>Looking for a full-time EE role starting May 2027</b>, and willing to relocate.</p>
+      <ul class="links">
+        <li><a href="#projects">See the projects</a></li>
+        <li><a href="https://www.linkedin.com/in/mouli-grandhi/">LinkedIn</a></li>
+        <li><a href="https://github.com/Mouli-Grandhi">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <section id="projects">
+    <div class="wrap">
+      <h2>Projects</h2>
+
+      <article class="project lead">
+        <div class="when">Fall 2026 to now<span>Senior capstone</span></div>
+        <div class="body">
+          <h3>Maskless lithography system</h3>
+          <p class="role">Team lead, four-person team, Penn State Harrisburg</p>
+          <p>We are building a machine that prints semiconductor patterns onto a wafer with projected light instead of a physical photomask. The target is 80 nm precision. The design is adapted from Carnegie Mellon Hacker Fab's open-source stepper.</p>
+          <ul class="points">
+            <li>Lead the team and serve as a primary technical contributor, working with three project advisors.</li>
+            <li>Manage the $5,000 budget.</li>
+            <li>Track the work with an Agile process.</li>
+          </ul>
+          <figure class="path">
+            <svg viewBox="0 0 700 170" role="img" aria-label="Diagram: a UV projector sends a pattern through reduction optics onto a wafer on a motorized stage">
+              <rect class="box" x="1" y="45" width="170" height="80" rx="6"/>
+              <text x="86" y="80" text-anchor="middle">UV projector</text>
+              <text class="sub" x="86" y="100" text-anchor="middle">draws the pattern</text>
+              <path class="ray" d="M171 85 H265"/>
+              <rect class="box" x="265" y="45" width="170" height="80" rx="6"/>
+              <text x="350" y="80" text-anchor="middle">Reduction optics</text>
+              <text class="sub" x="350" y="100" text-anchor="middle">shrink it down</text>
+              <path class="cone" d="M435 55 L560 85 L435 115 Z"/>
+              <path class="ray" d="M435 85 H560"/>
+              <ellipse class="wafer" cx="610" cy="85" rx="50" ry="50"/>
+              <text x="610" y="82" text-anchor="middle">Wafer</text>
+              <text class="sub" x="610" y="100" text-anchor="middle">on a stage</text>
+            </svg>
+            <figcaption>How maskless lithography works, simplified.</figcaption>
+          </figure>
+          <ul class="tools" aria-label="Skills used">
+            <li>Photolithography</li><li>Optics</li><li>Motion control</li><li>Team leadership</li><li>Budgeting</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="when">November 2026<span>YCP Hacks</span></div>
+        <div class="body">
+          <h3>KeepSake retro game console</h3>
+          <p class="role">Hackathon team project</p>
+          <p>A game console on a Raspberry Pi where every cartridge is an NFC tag. The tag stores which game to launch and that game's save data, so your saves travel with the cartridge to any other console. It shipped with eight games.</p>
+          <ul class="tools" aria-label="Built with">
+            <li>Raspberry Pi 5</li><li>RC522 NFC reader</li><li>SPI display</li><li>Python</li><li>pygame</li>
+          </ul>
+          <p class="more"><a href="https://github.com/dannywatts/ycphacks-2026">KeepSake code on GitHub</a></p>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="when">October 2025<span>Personal</span></div>
+        <div class="body">
+          <h3>Animatronic rat costume</h3>
+          <p class="role">Designed, printed, wired, and programmed</p>
+          <p>A wearable 3D-printed rat for Halloween that sits on my head, worn with a chef's coat, and moves on its own. Two servo arms each pick a new random angle every 800 ms, so the motion never loops, and two LEDs light the eyes. The code is non-blocking, timed with <code>millis()</code> instead of <code>delay()</code>.</p>
+          <div class="shots two">
+            <figure><img src="assets/remy-costume.jpg" alt="The costume being worn: the printed rat sits on top of the head with its LED eyes lit" width="800" height="1067"></figure>
+            <figure><img src="assets/remy-closeup.jpg" alt="Close-up of the gray 3D-printed rat body with LED eyes, next to a breadboard" width="563" height="1000"></figure>
+          </div>
+          <ul class="tools" aria-label="Built with">
+            <li>Arduino Mega</li><li>Servos</li><li>C++</li><li>Bambu Lab A1 mini</li><li>3D modeling</li>
+          </ul>
+          <p class="more"><a href="https://github.com/Mouli-Grandhi/remy-rat-costume">Costume code, wiring, and print files on GitHub</a></p>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="when">Fall 2025<span>CMPEH 472</span></div>
+        <div class="body">
+          <h3>Infrared remote-control robot</h3>
+          <p class="role">Final project, built with Michael Zimmerman</p>
+          <p>A two-wheel robot on a Raspberry Pi Pico W running MicroPython. An infrared remote steers it, yellow LEDs blink as turn signals, red LEDs flash in reverse, and an ultrasonic sensor stops it 10 cm short of an obstacle until you back up.</p>
+          <p>The motors could not turn reliably across most of the PWM range, so variable speed was out. We used PWM to balance the two motors instead, which made the robot drive straight.</p>
+          <ul class="tools" aria-label="Built with">
+            <li>Raspberry Pi Pico W</li><li>MicroPython</li><li>NEC infrared</li><li>HC-SR04</li><li>PWM motor control</li>
+          </ul>
+          <p class="more"><a href="https://github.com/Mouli-Grandhi/pico-ir-robot">Robot code and full report on GitHub</a></p>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="when">Ongoing<span>Personal</span></div>
+        <div class="body">
+          <h3>Enigma machine simulator</h3>
+          <p class="role">Solo project, two versions</p>
+          <p>A working copy of the WWII Enigma I cipher machine. Each letter passes through three rotors with the historical wirings, bounces off a reflector, and comes back through, and the rotors step before every key press. Feed the scrambled text back in from the same start position and the original message comes out.</p>
+          <div class="shots one">
+            <figure><img src="assets/enigma-demo.gif" alt="Screen recording of the app encoding a sentence into scrambled letters, then decoding it back" width="560" height="256">
+            <figcaption>The app version encoding a message, then decoding it.</figcaption></figure>
+          </div>
+          <ul class="tools" aria-label="Built with">
+            <li>Python</li><li>JavaScript</li><li>Code.org App Lab</li>
+          </ul>
+          <p class="more"><a href="https://github.com/Mouli-Grandhi/Enigma-Machine">Enigma code on GitHub</a></p>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="when">2022<span>High school</span></div>
+        <div class="body">
+          <h3>VEX Robotics competition robot</h3>
+          <p class="role">Spin Up season, Robotics 2 class</p>
+          <p>A robot that drives on omni-wheels, picks discs off the floor with a rubber-band intake, launches them with a weighted flywheel, spins the field rollers, and expands at the end of the match on linear rails. Classmates adopted a similar design after seeing it work.</p>
+          <div class="shots wide">
+            <figure><img src="assets/vex-roller.jpg" alt="The robot holding a yellow disc beside the red and blue field roller" width="1100" height="801"></figure>
+            <figure><img src="assets/vex-robot.jpg" alt="Front view of the robot's rubber-band intake pulling in a disc" width="491" height="508"></figure>
+          </div>
+          <ul class="tools" aria-label="Built with">
+            <li>VEX V5</li><li>Drivetrain design</li><li>Gear trains</li><li>Mechanical design</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="when">High school<span>Engineering design</span></div>
+        <div class="body">
+          <h3>Pinball mini-golf course</h3>
+          <p class="role">Team lead, team of four</p>
+          <p>Designed and fabricated a pinball-themed mini-golf hole, taking it from concept to a playable course.</p>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="when">Ongoing<span>Personal</span></div>
+        <div class="body">
+          <h3>3D printing and design</h3>
+          <p>I design parts in Fusion 360 and SolidWorks and print them at home, both to fix real problems around the house and for several paid commercial jobs.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="wrap">
+      <h2>Experience</h2>
+
+      <article class="job">
+        <div class="when">June 2025 to now<span>Middletown, PA</span></div>
+        <div class="body">
+          <h3>Electrical engineering intern, Legrand</h3>
+          <ul class="points">
+            <li>Engineered a firmware update and rework procedure used on 7,000 smart home devices on a high-volume manufacturing line.</li>
+            <li>Ran high-potential and continuity tests on 400 devices across multiple product lines, using oscilloscopes and multimeters.</li>
+            <li>Found out why factory-fresh microcontrollers would not connect: a special boot mode was disabling every connectivity interface.</li>
+            <li>Investigating why Bluetooth Low Energy devices randomly drop out of their group on a 30-device test bench.</li>
+            <li>Assembled and soldered PCB assemblies with fine-pitch ICs and passive components.</li>
+            <li>Part of the team writing a product requirements document.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="job">
+        <div class="when">Now<span>Penn State Harrisburg</span></div>
+        <div class="body">
+          <h3>President, IEEE student branch</h3>
+          <ul class="points">
+            <li>Lead the branch and its officer team.</li>
+            <li>Organized 5 events so far, including technical workshops, speaker events, and networking for engineering students.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="job">
+        <div class="when">January to May 2025<span>Middletown, PA</span></div>
+        <div class="body">
+          <h3>Technical assistant, Kulkarni Theater</h3>
+          <ul class="points">
+            <li>Set up, tested, and troubleshot audio, lighting, and electrical equipment for campus events.</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <h2>About</h2>
+      <div class="facts">
+        <div>
+          <h3>Education</h3>
+          <ul>
+            <li>B.S. Electrical Engineering<small>Pennsylvania State University, Middletown, PA</small></li>
+            <li>August 2023 to May 2027</li>
+            <li>GPA 3.4 / 4.0</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Coursework</h3>
+          <ul>
+            <li>Circuits &amp; Devices</li>
+            <li>Electronic Circuit Design I &amp; II</li>
+            <li>Semiconductor Devices</li>
+            <li>Power Electronics</li>
+            <li>Control Systems</li>
+            <li>Communications</li>
+            <li>Microprocessors &amp; Embedded Systems</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Skills</h3>
+          <ul>
+            <li>Python, Java, JavaScript<small>Programming</small></li>
+            <li>Embedded programming<small>Arduino, MicroPython, Raspberry Pi</small></li>
+            <li>MATLAB, Simulink, PSpice<small>Simulation</small></li>
+            <li>SolidWorks, Fusion 360<small>CAD and 3D printing</small></li>
+            <li>Oscilloscopes, multimeters, soldering<small>Lab and bench</small></li>
+            <li>Jira, Microsoft 365<small>Team tools</small></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <h2>Contact</h2>
+    <p>The fastest way to reach me is a message on <a href="https://www.linkedin.com/in/mouli-grandhi/">LinkedIn</a>. My code lives on <a href="https://github.com/Mouli-Grandhi">GitHub</a>.</p>
+    <p>Mouli Grandhi, York, Pennsylvania.</p>
+  </div>
+</footer>
+
+</body>
+</html>
